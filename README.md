@@ -1,0 +1,1 @@
+API Interna para checagem de elegibilidade

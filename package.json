@@ -2,8 +2,10 @@
   "name": "lemon-elegibilidade",
   "version": "1.0.0",
   "description": "API interna para checagem de elegibilidade de clientes",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "mocha tests/**/*.test.js --reporter spec"
   },
   "repository": {
