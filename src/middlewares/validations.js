@@ -1,4 +1,4 @@
-const { props, docNumber } = require('../schemas');
+const { props, docNumber, connectionType } = require('../schemas');
 
 const validatePropsIntegrity = (req, _res, next) => {
   const error = props.validate(req.body);
@@ -14,7 +14,15 @@ const validateDocNumber = (req, _res, next) => {
   return next();
 };
 
+const validateConnectionType = (req, _res, next) => {
+  const error = connectionType.validate(req.body);
+  if (error) return next(error);
+
+  return next();
+};
+
 module.exports = {
   validatePropsIntegrity,
   validateDocNumber,
+  validateConnectionType,
 };
