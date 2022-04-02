@@ -22,8 +22,18 @@ const extraProps = {
   propriedadeExtra: 0
 };
 
+const validCnpj = {
+  numeroDoDocumento: 87945143000154
+};
+
+const validCpf = {
+  numeroDoDocumento: 14041737706
+};
+
 module.exports = {
   extraProps,
   requiredProps,
   missingRequiredProps,
+  validCnpj,
+  validCpf,
 };

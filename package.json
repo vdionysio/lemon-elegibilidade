@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "nyc --all mocha tests/**/*.test.js --reporter spec"
+    "test": "nyc --all mocha tests/**/*.test.js --exit"
   },
   "repository": {
     "type": "git",
