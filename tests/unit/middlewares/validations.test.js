@@ -18,7 +18,7 @@ describe('validação da presença/ausência das propriedades', () => {
   });
 
   describe('quando as propriedades passadas são apenas as esperadas', () => {
-    it('executa next sem parâmetros', () => {
+    it('chama next sem parâmetros', () => {
       request.body = requiredProps;
       validations.validatePropsIntegrity(request, response, next);
       expect(next.calledWithExactly()).to.be.true
@@ -26,7 +26,7 @@ describe('validação da presença/ausência das propriedades', () => {
   });
 
   describe('quando são passadas propriedades não esperadas', () => {
-    it('executa next com Erro e mensagem: "propriedadeExtra" is not allowed', () => {
+    it('chama next com Erro e mensagem: "propriedadeExtra" is not allowed', () => {
       request.body = extraProps;
 
       validations.validatePropsIntegrity(request, response, next);
@@ -38,7 +38,7 @@ describe('validação da presença/ausência das propriedades', () => {
   });
 
   describe('quando faltam propriedades necessárias', () => {
-    it('executa next com Erro e mensagem do tipo: "historicoDeConsumo" is required', () => {
+    it('chama next com Erro e mensagem do tipo: "historicoDeConsumo" is required', () => {
       request.body = missingRequiredProps;
 
       validations.validatePropsIntegrity(request, response, next);
@@ -65,7 +65,7 @@ describe('validação do número do documento', () => {
   });
 
   describe('quando o número de documento é um cpf com pattern valido', () => {
-    it('executa next sem parâmetros', () => {
+    it('chama next sem parâmetros', () => {
       request.body = validCpf;
       validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
@@ -73,7 +73,7 @@ describe('validação do número do documento', () => {
   });
 
   describe('quando o número de documento é um cnpj com pattern valido', () => {
-    it('executa next sem parâmetros', () => {
+    it('chama next sem parâmetros', () => {
       request.body = validCnpj;
       validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
@@ -81,7 +81,7 @@ describe('validação do número do documento', () => {
   });
 
   describe('quando o número de documento não satisfaz nenhuma das patterns', () => {
-    it('executa next com Erro e mensagem: "numeroDoDocumento" is invalid', () => {
+    it('chama next com Erro e mensagem: "numeroDoDocumento" is invalid', () => {
       request.body = invalidDocNumber;
 
       validations.validateDocNumber(request, response, next);
@@ -109,7 +109,7 @@ describe('validação do tipo de conexão', () => {
   });
 
   describe('quando o tipo de conexão é valido', () => {
-    it('executa next sem parâmetros', () => {
+    it('chama next sem parâmetros', () => {
       request.body = validConnectionType;
       validations.validateConnectionType(request, response, next);
       expect(next.calledWithExactly()).to.be.true
@@ -117,15 +117,52 @@ describe('validação do tipo de conexão', () => {
   });
 
   describe('quando o tipo de conexão é invalido', () => {
-    it('executa next com Erro e mensagem: "tipoDeConexao" is invalid', () => {
+    it('chama next com Erro e mensagem: "tipoDeConexao" must be one of ["monofasico", "bifasico", "trifasico"]', () => {
       request.body = invalidConnectionType;
 
       validations.validateConnectionType(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
-      expect(errArg.message).to.equal('"tipoDeConexao" is invalid');
+      expect(errArg.message).to.equal('"tipoDeConexao" must be one of ["monofasico", "bifasico", "trifasico"]');
     })
   });
 
+});
+
+describe('validação da classe de consumo', () => {
+  const { validConsumptionClass, invalidConsumptionClass } = mocks
+  let response = {};
+  let request = {};
+  let next = {};
+
+  before(() => {
+    response.status = sinon.stub()
+      .returns(response);
+    response.json = sinon.stub()
+      .returns();
+    next = sinon.spy();
+  });
+
+  describe('quando a classe de consumo é valida', () => {
+    it('chama next sem parâmetros', () => {
+      request.body = validConsumptionClass;
+      validations.validateConsumptionClass(request, response, next);
+      expect(next.calledWithExactly()).to.be.true
+    })
+  });
+
+  describe('quando a classe de consumo é invalida', () => {
+    it('chama next com Erro e mensagem: "classeDeConsumo" must be one of' +
+     '["residencial","industrial","comercial","rural","poderPublico" ]', () => {
+      request.body = invalidConsumptionClass;
+
+      validations.validateConsumptionClass(request, response, next);
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"classeDeConsumo" must be one of' +
+      '["residencial","industrial","comercial","rural","poderPublico" ]');
+    })
+  });
 });
