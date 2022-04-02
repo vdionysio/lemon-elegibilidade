@@ -1,3 +1,5 @@
+const { tiposDeConexao } = require("../../../src/utils/types");
+
 const requiredProps = {
   numeroDoDocumento: 0,
   tipoDeConexao: 0,
@@ -34,6 +36,14 @@ const invalidDocNumber = {
   numeroDoDocumento: '428776053',
 };
 
+const validConnectionType = {
+  tipoDeConexao: tiposDeConexao[0],
+};
+
+const invalidConnectionType = {
+  tipoDeConexao: 'invalido'
+};
+
 module.exports = {
   extraProps,
   requiredProps,
@@ -41,4 +51,6 @@ module.exports = {
   validCnpj,
   validCpf,
   invalidDocNumber,
+  validConnectionType,
+  invalidConnectionType,
 };
