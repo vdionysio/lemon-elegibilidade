@@ -1,9 +1,26 @@
-const Joi = require('joi');
+const { requiredKeys } = require('../utils/types');
 
-module.exports = Joi.object().keys({
-  numeroDoDocumento: Joi.required(),
-  tipoDeConexao: Joi.required(),
-  classeDeConsumo: Joi.required(),
-  modalidadeTarifaria: Joi.required(),
-  historicoDeConsumo: Joi.required(),
-});
+const validate = (body) => {
+  const bodyKeys = Object.keys(body);
+  const firstMissingKey = requiredKeys
+    .find((required) => !bodyKeys.includes(required));
+
+  if (firstMissingKey) {
+    const error = new Error(`"${firstMissingKey}" is required`);
+    return error;
+  }
+
+  const firstExtraKey = bodyKeys
+    .find((bodyKey) => !requiredKeys.includes(bodyKey));
+
+  if (firstExtraKey) {
+    const error = new Error(`"${firstExtraKey}" is not allowed`);
+    return error;
+  }
+
+  return null;
+};
+
+module.exports = {
+  validate,
+};

@@ -49,3 +49,7 @@ describe('validação da presença/ausência das propriedades', () => {
     })
   });
 });
+
+describe('validação do número do documento', () => {
+  
+});
