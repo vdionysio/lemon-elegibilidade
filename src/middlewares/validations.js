@@ -1,12 +1,20 @@
-const propsSchema = require('../schemas/propsSchema');
+const { props, docNumber } = require('../schemas');
 
-const validatesPropsIntegrity = (req, _res, next) => {
-  const error = propsSchema.validate(req.body);
+const validatePropsIntegrity = (req, _res, next) => {
+  const error = props.validate(req.body);
+  if (error) return next(error);
+
+  return next();
+};
+
+const validateDocNumber = (req, _res, next) => {
+  const error = docNumber.validate(req.body);
   if (error) return next(error);
 
   return next();
 };
 
 module.exports = {
-  validatesPropsIntegrity,
+  validatePropsIntegrity,
+  validateDocNumber,
 };

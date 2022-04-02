@@ -1,3 +1,4 @@
+const { generateSchemaError } = require('../utils');
 const { requiredKeys } = require('../utils/types');
 
 const validate = (body) => {
@@ -6,16 +7,14 @@ const validate = (body) => {
     .find((required) => !bodyKeys.includes(required));
 
   if (firstMissingKey) {
-    const error = new Error(`"${firstMissingKey}" is required`);
-    return error;
+    return generateSchemaError(`"${firstMissingKey}" is required`);
   }
 
   const firstExtraKey = bodyKeys
     .find((bodyKey) => !requiredKeys.includes(bodyKey));
 
   if (firstExtraKey) {
-    const error = new Error(`"${firstExtraKey}" is not allowed`);
-    return error;
+    return generateSchemaError(`"${firstExtraKey}" is not allowed`);
   }
 
   return null;

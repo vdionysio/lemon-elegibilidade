@@ -19,15 +19,19 @@ const extraProps = {
   classeDeConsumo: 0,
   modalidadeTarifaria: 0,
   historicoDeConsumo: 0,
-  propriedadeExtra: 0
+  propriedadeExtra: 0,
 };
 
 const validCnpj = {
-  numeroDoDocumento: 87945143000154
+  numeroDoDocumento: '87945143000154',
 };
 
 const validCpf = {
-  numeroDoDocumento: 14041737706
+  numeroDoDocumento: '21554495008',
+};
+
+const invalidDocNumber = {
+  numeroDoDocumento: '428776053',
 };
 
 module.exports = {
@@ -36,4 +40,5 @@ module.exports = {
   missingRequiredProps,
   validCnpj,
   validCpf,
+  invalidDocNumber,
 };

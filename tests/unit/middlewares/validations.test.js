@@ -20,7 +20,7 @@ describe('validação da presença/ausência das propriedades', () => {
   describe('quando as propriedades passadas são apenas as esperadas', () => {
     it('executa next sem parâmetros', () => {
       request.body = requiredProps;
-      validations.validatesPropsIntegrity(request, response, next);
+      validations.validatePropsIntegrity(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -29,7 +29,7 @@ describe('validação da presença/ausência das propriedades', () => {
     it('executa next com Erro e mensagem: "propriedadeExtra" is not allowed', () => {
       request.body = extraProps;
 
-      validations.validatesPropsIntegrity(request, response, next);
+      validations.validatePropsIntegrity(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -41,7 +41,7 @@ describe('validação da presença/ausência das propriedades', () => {
     it('executa next com Erro e mensagem do tipo: "historicoDeConsumo" is required', () => {
       request.body = missingRequiredProps;
 
-      validations.validatesPropsIntegrity(request, response, next);
+      validations.validatePropsIntegrity(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -51,7 +51,7 @@ describe('validação da presença/ausência das propriedades', () => {
 });
 
 describe('validação do número do documento', () => {
-  const { validCnpj, validCpf } = mocks
+  const { validCnpj, validCpf, invalidDocNumber } = mocks
   let response = {};
   let request = {};
   let next = {};
@@ -67,7 +67,7 @@ describe('validação do número do documento', () => {
   describe('quando o número de documento é um cpf com pattern valido', () => {
     it('executa next sem parâmetros', () => {
       request.body = validCpf;
-      validations.validatesDocNumber(request, response, next);
+      validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -75,16 +75,16 @@ describe('validação do número do documento', () => {
   describe('quando o número de documento é um cnpj com pattern valido', () => {
     it('executa next sem parâmetros', () => {
       request.body = validCnpj;
-      validations.validatesDocNumber(request, response, next);
+      validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
 
   describe('quando o número de documento não satisfaz nenhuma das patterns', () => {
     it('executa next com Erro e mensagem: "numeroDoDocumento" is invalid', () => {
-      request.body = extraProps;
+      request.body = invalidDocNumber;
 
-      validations.validatesDocNumber(request, response, next);
+      validations.validateDocNumber(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);

@@ -8,13 +8,13 @@ const requiredKeys = [
 
 const cpf = {
   type: 'string',
-  pattern: '^\\d{11}$',
+  pattern: /^\d{11}$/,
   example: '21554495008',
 };
 
 const cnpj = {
   type: 'string',
-  pattern: '^\\d{14}$',
+  pattern: /^\d{14}$/,
   example: '33400689000109',
 };
 
