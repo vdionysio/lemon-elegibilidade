@@ -1,0 +1,25 @@
+{
+  "name": "lemon-elegibilidade",
+  "version": "1.0.0",
+  "description": "API interna para checagem de elegibilidade de clientes",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/**/*.test.js --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vdionysio/lemon-elegibilidade.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mocha",
+    "chai",
+    "lemonbs"
+  ],
+  "author": "vdionysio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vdionysio/lemon-elegibilidade/issues"
+  },
+  "homepage": "https://github.com/vdionysio/lemon-elegibilidade#readme"
+}
