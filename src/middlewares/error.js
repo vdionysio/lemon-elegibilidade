@@ -1,4 +1,4 @@
-module.exports = (err, _req, res) => {
+module.exports = (err, _req, res, _next) => {
   if (err.fromSchema) {
     return res.status(400).json({ message: err.message });
   }

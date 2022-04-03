@@ -1,4 +1,6 @@
 const express = require('express');
+const rescue = require('express-rescue');
+const { eligibility } = require('../controllers');
 const { validator } = require('../middlewares');
 const {
   props,
@@ -12,13 +14,14 @@ const {
 const router = express.Router();
 
 router.post(
-  '/eligibility',
+  '/',
   validator(props),
   validator(docNumber),
   validator(connectionType),
   validator(consumptionClass),
   validator(tariffModality),
   validator(consumptionHistory),
+  rescue(eligibility.createReport),
 );
 
 module.exports = router;
