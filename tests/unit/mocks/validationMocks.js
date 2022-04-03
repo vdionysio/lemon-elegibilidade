@@ -53,7 +53,7 @@ const invalidConsumptionClass = {
 };
 
 const validTariffModality = {
-  modalidadeTarifarias: modalidadesTarifarias[0],
+  modalidadeTarifaria: modalidadesTarifarias[0],
 };
 
 const invalidTariffModality = {

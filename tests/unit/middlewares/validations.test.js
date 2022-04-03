@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { validator } = require('../../../src/middlewares');
-const { consumptionClass, props, docNumber, connectionType } = require('../../../src/schemas');
+const { consumptionClass, props, docNumber, connectionType, tariffModality } = require('../../../src/schemas');
 const mocks = require('../mocks/validationMocks');
 
 describe('validação da presença/ausência das propriedades', () => {
