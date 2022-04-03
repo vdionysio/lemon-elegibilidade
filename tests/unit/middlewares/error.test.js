@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { error } = require('../../../src/middlewares');
 const { generateSchemaError } = require('../../../src/utils');
 
-describe('validação da presença/ausência das propriedades', () => {
+describe('validação das respostas do middleware de erro', () => {
   let response = {};
   let request = {};
   let err;
