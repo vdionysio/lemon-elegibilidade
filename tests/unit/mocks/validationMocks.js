@@ -60,6 +60,87 @@ const invalidTariffModality = {
   modalidadeTarifaria: 'invalid',
 };
 
+const validConsumptionHistory = {
+  historicoDeConsumo: [
+    3878,
+    9760,
+    5976,
+    2797,
+    2481,
+    5731,
+    7538,
+    4392,
+    7859,
+    4160,
+    6941,
+    4597
+  ],
+};
+
+const twoMonthsConsumptionHistory = {
+  historicoDeConsumo: [
+    3878,
+    9760,
+  ],
+};
+
+const fourteenMonthsConsumptionHistory = {
+  historicoDeConsumo: [
+    3878,
+    9760,
+    5976,
+    2797,
+    2481,
+    5731,
+    7538,
+    4392,
+    7859,
+    4160,
+    6941,
+    4597,
+    5599,
+    4027,
+  ],
+};
+
+const consumptionHistoryWithString = {
+  historicoDeConsumo: [
+    '3878',
+    9760,
+    5976,
+    2797,
+    2481,
+    5731,
+    7538,
+    4392,
+    7859,
+    4160,
+    6941,
+    4597
+  ],
+};
+
+const invalidTypeConsumptionHistory = {
+  historicoDeConsumo: 'not an array',
+};
+
+const outlierConsumptionHistory = {
+  historicoDeConsumo: [
+    3878,
+    9760,
+    5976,
+    2797,
+    2481,
+    5731,
+    7538,
+    4392,
+    7859,
+    4160,
+    6941,
+    10000,
+  ],
+};
+
 module.exports = {
   extraProps,
   requiredProps,
@@ -73,4 +154,10 @@ module.exports = {
   invalidConsumptionClass,
   validTariffModality,
   invalidTariffModality,
+  validConsumptionHistory,
+  twoMonthsConsumptionHistory,
+  fourteenMonthsConsumptionHistory,
+  consumptionHistoryWithString,
+  invalidTypeConsumptionHistory,
+  outlierConsumptionHistory,
 };

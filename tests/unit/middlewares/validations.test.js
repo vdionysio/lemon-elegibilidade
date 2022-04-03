@@ -5,7 +5,7 @@ const { consumptionClass, props, docNumber, connectionType, tariffModality } = r
 const mocks = require('../mocks/validationMocks');
 
 describe('validação da presença/ausência das propriedades', () => {
-  const { requiredProps, missingRequiredProps, extraProps } = mocks
+  const { requiredProps, missingRequiredProps, extraProps } = mocks;
   let response = {};
   let request = {};
   let next = {};
@@ -50,7 +50,7 @@ describe('validação da presença/ausência das propriedades', () => {
 });
 
 describe('validação do número do documento', () => {
-  const { validCnpj, validCpf, invalidDocNumber } = mocks
+  const { validCnpj, validCpf, invalidDocNumber } = mocks;
   let response = {};
   let request = {};
   let next = {};
@@ -93,7 +93,7 @@ describe('validação do número do documento', () => {
 });
 
 describe('validação do tipo de conexão', () => {
-  const { validConnectionType, invalidConnectionType } = mocks
+  const { validConnectionType, invalidConnectionType } = mocks;
   let response = {};
   let request = {};
   let next = {};
@@ -128,7 +128,7 @@ describe('validação do tipo de conexão', () => {
 });
 
 describe('validação da classe de consumo', () => {
-  const { validConsumptionClass, invalidConsumptionClass } = mocks
+  const { validConsumptionClass, invalidConsumptionClass } = mocks;
   let response = {};
   let request = {};
   let next = {};
@@ -164,7 +164,7 @@ describe('validação da classe de consumo', () => {
 });
 
 describe('validação da modalidade tarifária', () => {
-  const { validTariffModality, invalidTariffModality } = mocks
+  const { validTariffModality, invalidTariffModality } = mocks;
   let response = {};
   let request = {};
   let next = {};
@@ -195,6 +195,91 @@ describe('validação da modalidade tarifária', () => {
       expect(errArg).to.be.instanceof(Error);
       expect(errArg.message).to.equal('"modalidadeTarifaria" must be one of' +
       '["azul", "branca", "verde", "convencional"]');
+    })
+  });
+});
+
+describe('validação do historico de consumo', () => {
+  const {
+    validConsumptionHistory,
+    consumptionHistoryWithString,
+    twoMonthsConsumptionHistory,
+    fourteenMonthsConsumptionHistory,
+    invalidTypeConsumptionHistory,
+    outlierConsumptionHistory,
+  } = mocks;
+  let response = {};
+  let request = {};
+  let next = {};
+
+  before(() => {
+    response.status = sinon.stub()
+      .returns(response);
+    response.json = sinon.stub()
+      .returns();
+    next = sinon.spy();
+  });
+
+  describe('quando o histórico de consumo é valido', () => {
+    it('chama next sem parâmetros', () => {
+      request.body = validConsumptionHistory;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.calledWithExactly()).to.be.true
+    })
+  });
+
+  describe('quando o histórico de consumo tem número de itens menor que 3', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" must have length >= 3 and <= 12', () => {
+      request.body = twoMonthsConsumptionHistory;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"historicoDeConsumo" must have length >= 3 and <= 12');
+    })
+  });
+
+  describe('quando o histórico de consumo tem número de itens maioe que 12', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" must have length >= 3 and <= 12', () => {
+      request.body = fourteenMonthsConsumptionHistory;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"historicoDeConsumo" must have length >= 3 and <= 12');
+    })
+  });
+
+  describe('quando o histórico de consumo tem itens que não são inteiros', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" must have just integer items', () => {
+      request.body = consumptionHistoryWithString;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"historicoDeConsumo" must have just integer items');
+    })
+  });
+
+  describe('quando o histórico de consumo não é um array', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" must be an array', () => {
+      request.body = invalidTypeConsumptionHistory;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"historicoDeConsumo" must be an array');
+    })
+  });
+
+  describe('quando o histórico de consumo possui um outlier', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" items must be in the range 0 - 9999', () => {
+      request.body = invalidTypeConsumptionHistory;
+      validator(consumptionHistory)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"historicoDeConsumo" items must be in the range 0 - 9999');
     })
   });
 });
