@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 });
 app.use(error);
 
-app.listen(3000, () => {
-  console.log('Escutando na porta 3000');
+app.listen(5000, () => {
+  console.log('Escutando na porta 5000');
 });
 
 module.exports = app;
