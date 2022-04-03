@@ -1,3 +1,5 @@
+const eligibility = require('./eligibility');
+
 const generateSchemaError = (message) => {
   const newError = new Error(message);
   newError.fromSchema = true;
@@ -7,4 +9,5 @@ const generateSchemaError = (message) => {
 
 module.exports = {
   generateSchemaError,
+  eligibility,
 };

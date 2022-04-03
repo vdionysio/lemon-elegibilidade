@@ -27,7 +27,7 @@ describe('Checagem da elegibilidade', () => {
     it('a função generateReport deve retornar um objeto com a propriedade elegivel sendo false', () => {
       expect(report.elegivel).to.be.false;
     })
-    it('e a propriedade razoesInelegibilidade', () => {
+    it('e a propriedade razoesDeInelegibilidade', () => {
       expect(report).to.has.property('razoesInelegibilidade');
       expect(report.razoesInelegibilidade).to.be.deep.equal([
         "Classe de consumo não aceita",
