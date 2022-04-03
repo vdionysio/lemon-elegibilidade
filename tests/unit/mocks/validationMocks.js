@@ -1,4 +1,4 @@
-const { tiposDeConexao, classesDeConsumo } = require("../../../src/utils/types");
+const { tiposDeConexao, classesDeConsumo, modalidadesTarifarias } = require("../../../src/utils/types");
 
 const requiredProps = {
   numeroDoDocumento: 0,
@@ -49,7 +49,15 @@ const validConsumptionClass = {
 };
 
 const invalidConsumptionClass = {
-  classeDeConsumo: 'invalid'
+  classeDeConsumo: 'invalid',
+};
+
+const validTariffModality = {
+  modalidadeTarifarias: modalidadesTarifarias[0],
+};
+
+const invalidTariffModality = {
+  modalidadeTarifaria: 'invalid',
 };
 
 module.exports = {
@@ -63,4 +71,6 @@ module.exports = {
   invalidConnectionType,
   validConsumptionClass,
   invalidConsumptionClass,
+  validTariffModality,
+  invalidTariffModality,
 };

@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-// const { validations } = require('../../../src/middlewares');
 const { validator } = require('../../../src/middlewares');
 const { consumptionClass, props, docNumber, connectionType } = require('../../../src/schemas');
 const mocks = require('../mocks/validationMocks');
@@ -23,7 +22,6 @@ describe('validação da presença/ausência das propriedades', () => {
     it('chama next sem parâmetros', () => {
       request.body = requiredProps;
       validator(props)(request, response, next)
-      // validations.validatePropsIntegrity(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -32,7 +30,6 @@ describe('validação da presença/ausência das propriedades', () => {
     it('chama next com Erro e mensagem: "propriedadeExtra" is not allowed', () => {
       request.body = extraProps;
       validator(props)(request, response, next)
-      // validations.validatePropsIntegrity(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -44,7 +41,6 @@ describe('validação da presença/ausência das propriedades', () => {
     it('chama next com Erro e mensagem do tipo: "historicoDeConsumo" is required', () => {
       request.body = missingRequiredProps;
       validator(props)(request, response, next)
-      // validations.validatePropsIntegrity(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -71,7 +67,6 @@ describe('validação do número do documento', () => {
     it('chama next sem parâmetros', () => {
       request.body = validCpf;
       validator(docNumber)(request, response, next)
-      // validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -80,7 +75,6 @@ describe('validação do número do documento', () => {
     it('chama next sem parâmetros', () => {
       request.body = validCnpj;
       validator(docNumber)(request, response, next)
-      // validations.validateDocNumber(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -89,7 +83,6 @@ describe('validação do número do documento', () => {
     it('chama next com Erro e mensagem: "numeroDoDocumento" is invalid', () => {
       request.body = invalidDocNumber;
       validator(docNumber)(request, response, next)
-      // validations.validateDocNumber(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -117,7 +110,6 @@ describe('validação do tipo de conexão', () => {
     it('chama next sem parâmetros', () => {
       request.body = validConnectionType;
       validator(connectionType)(request, response, next)
-      // validations.validateConnectionType(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -126,7 +118,6 @@ describe('validação do tipo de conexão', () => {
     it('chama next com Erro e mensagem: "tipoDeConexao" must be one of ["monofasico", "bifasico", "trifasico"]', () => {
       request.body = invalidConnectionType;
       validator(connectionType)(request, response, next)
-      // validations.validateConnectionType(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
@@ -154,7 +145,6 @@ describe('validação da classe de consumo', () => {
     it('chama next sem parâmetros', () => {
       request.body = validConsumptionClass;
       validator(consumptionClass)(request, response, next)
-      // validations.validateConsumptionClass(request, response, next);
       expect(next.calledWithExactly()).to.be.true
     })
   });
@@ -164,12 +154,47 @@ describe('validação da classe de consumo', () => {
      '["residencial","industrial","comercial","rural","poderPublico" ]', () => {
       request.body = invalidConsumptionClass;
       validator(consumptionClass)(request, response, next)
-      // validations.validateConsumptionClass(request, response, next);
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
       expect(errArg.message).to.equal('"classeDeConsumo" must be one of' +
       '["residencial","industrial","comercial","rural","poderPublico" ]');
+    })
+  });
+});
+
+describe('validação da modalidade tarifária', () => {
+  const { validTariffModality, invalidTariffModality } = mocks
+  let response = {};
+  let request = {};
+  let next = {};
+
+  before(() => {
+    response.status = sinon.stub()
+      .returns(response);
+    response.json = sinon.stub()
+      .returns();
+    next = sinon.spy();
+  });
+
+  describe('quando a modalidade tarifária é valida', () => {
+    it('chama next sem parâmetros', () => {
+      request.body = validTariffModality;
+      validator(tariffModality)(request, response, next)
+      expect(next.calledWithExactly()).to.be.true
+    })
+  });
+
+  describe('quando a classe de consumo é invalida', () => {
+    it('chama next com Erro e mensagem: "modalidadeTarifaria" must be one of' +
+    '["azul", "branca", "verde", "convencional"]', () => {
+      request.body = invalidTariffModality;
+      validator(tariffModality)(request, response, next)
+      expect(next.called).to.be.true;
+      const errArg = next.lastCall.args[0];
+      expect(errArg).to.be.instanceof(Error);
+      expect(errArg.message).to.equal('"modalidadeTarifaria" must be one of' +
+      '["azul", "branca", "verde", "convencional"]');
     })
   });
 });
