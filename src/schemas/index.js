@@ -3,6 +3,7 @@ const docNumber = require('./docNumber');
 const connectionType = require('./connectionType');
 const consumptionClass = require('./consumptionClass');
 const tariffModality = require('./tariffModality');
+const consumptionHistory = require('./consumptionHistory');
 
 module.exports = {
   props,
@@ -10,4 +11,5 @@ module.exports = {
   connectionType,
   consumptionClass,
   tariffModality,
+  consumptionHistory,
 };

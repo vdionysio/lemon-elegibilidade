@@ -1,8 +1,15 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { validator } = require('../../../src/middlewares');
-const { consumptionClass, props, docNumber, connectionType, tariffModality } = require('../../../src/schemas');
 const mocks = require('../mocks/validationMocks');
+const {
+  consumptionClass,
+  props,
+  docNumber,
+  connectionType,
+  tariffModality,
+  consumptionHistory
+} = require('../../../src/schemas');
 
 describe('validação da presença/ausência das propriedades', () => {
   const { requiredProps, missingRequiredProps, extraProps } = mocks;
@@ -251,13 +258,13 @@ describe('validação do historico de consumo', () => {
   });
 
   describe('quando o histórico de consumo tem itens que não são inteiros', () => {
-    it('chama next com Erro e mensagem: "historicoDeConsumo" must have just integer items', () => {
+    it('chama next com Erro e mensagem: "historicoDeConsumo" must have only integer items', () => {
       request.body = consumptionHistoryWithString;
       validator(consumptionHistory)(request, response, next)
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
       expect(errArg).to.be.instanceof(Error);
-      expect(errArg.message).to.equal('"historicoDeConsumo" must have just integer items');
+      expect(errArg.message).to.equal('"historicoDeConsumo" must have only integer items');
     })
   });
 
@@ -274,7 +281,7 @@ describe('validação do historico de consumo', () => {
 
   describe('quando o histórico de consumo possui um outlier', () => {
     it('chama next com Erro e mensagem: "historicoDeConsumo" items must be in the range 0 - 9999', () => {
-      request.body = invalidTypeConsumptionHistory;
+      request.body = outlierConsumptionHistory;
       validator(consumptionHistory)(request, response, next)
       expect(next.called).to.be.true;
       const errArg = next.lastCall.args[0];
