@@ -38,7 +38,27 @@ const notEligible = {
   ]
 };
 
+const notEligibleByHistory = {
+  "numeroDoDocumento": "14041737706",
+  "tipoDeConexao": "bifasico",
+  "classeDeConsumo": "residencial",
+  "modalidadeTarifaria": "convencional",
+  "historicoDeConsumo": [
+    278, // mes atual
+    160, // mes anterior
+    276, // 2 meses atras
+    297, // 3 meses atras
+    181, // 4 meses atras
+    131, // 5 meses atras
+    138, // 6 meses atras
+    192, // 7 meses atras
+    159, // 8 meses atras
+    160, // 9 meses atras
+  ]
+};
+
 module.exports = {
   eligible,
   notEligible,
+  notEligibleByHistory,
 }

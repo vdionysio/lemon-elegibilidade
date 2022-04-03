@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { validator } = require('../../../src/middlewares');
-const mocks = require('../mocks/validtorMocks');
+const mocks = require('../../mocks/validtorMocks');
 const {
   consumptionClass,
   props,

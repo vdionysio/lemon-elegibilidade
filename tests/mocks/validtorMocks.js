@@ -1,4 +1,4 @@
-const { tiposDeConexao, classesDeConsumo, modalidadesTarifarias } = require("../../../src/utils/types");
+const { tiposDeConexao, classesDeConsumo, modalidadesTarifarias } = require('../../src/utils/types');
 
 const requiredProps = {
   numeroDoDocumento: 0,

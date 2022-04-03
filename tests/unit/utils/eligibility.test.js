@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const { eligibility } = require('../../../src/utils');
-const mocks = require('../mocks/eligibilityMocks');
+const mocks = require('../../mocks/eligibilityMocks');
 
 describe('Checagem da elegibilidade', () => {
   describe('Quando o cliente é elegível', () => {
@@ -32,6 +32,23 @@ describe('Checagem da elegibilidade', () => {
       expect(report.razoesInelegibilidade).to.be.deep.equal([
         "Classe de consumo não aceita",
         "Modalidade tarifária não aceita",
+      ]);
+    })
+  });
+
+  describe('Quando o cliente não é elegível pelo histórico', () => {
+    const { notEligibleByHistory } = mocks;
+    let report;
+    before(() => {
+      report = eligibility.generateReport(notEligibleByHistory);
+    });
+    it('a função generateReport deve retornar um objeto com a propriedade elegivel sendo false', () => {
+      expect(report.elegivel).to.be.false;
+    })
+    it('e a propriedade razoesDeInelegibilidade', () => {
+      expect(report).to.has.property('razoesInelegibilidade');
+      expect(report.razoesInelegibilidade).to.be.deep.equal([
+        "Consumo muito baixo para tipo de conexão"
       ]);
     })
   });
