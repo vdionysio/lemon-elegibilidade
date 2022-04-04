@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #dee2e6;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    h4 span {
+      display: inline-block;
+      text-align: center;
+      width: 70px;
+      padding-top: 3px;
+      /* border: 1px solid black; */
+      border-radius: 2px;
+      color: whitesmoke;
+    }
+
+    code {
+      display: block;
+    }
+
+    ul {
+      list-style-type: ;
+    }
+    ul {
+      list-style: none;
+    }
+
+    ul li:before{
+      content: '';
+      position: absolute;
+      border-right:2px solid black;
+      border-bottom:2px solid black;
+      width:10px;
+      height:10px;
+      top: calc(50% - 4px);
+      left: -20px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    .post {
+      background-color: #02c39a;
+    }
+
+    .get {
+      background-color: #0077b6;
+    }
+
+    .delete {
+      background-color: #ef233c;
+    }
+
+    .put {
+      background-color: #f48c06;
+    }
+    
+    </style>
+</head>
+<body>
+  <h1>Lemon elegibilidade</h1>
+  <h2>Rotas</h2>
+  <ul>
+    <li>
+      <div>
+        <h4><span class="post">POST</span> /eligibility</h4>
+        <p>Checa a elegibilidade de um cliente.</p>
+        <p>Para realizar essa requisição é necessário um body json no formato do exemplo a seguir.</p>
+        <span>Ex:</span>
+        <code>
+          {<br>
+            &nbsp;&nbsp;"numeroDoDocumento": "14041737706",<br>
+            &nbsp;&nbsp;"tipoDeConexao": "bifasico",<br>
+            &nbsp;&nbsp;"classeDeConsumo": "comercial",<br>
+            &nbsp;&nbsp;"modalidadeTarifaria": "convencional",<br>
+            &nbsp;&nbsp;"historicoDeConsumo": [<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;3878,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;9760,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;5976,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;2797,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;2481,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;5731,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;7538,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;4392,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;7859,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;4160,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;6941,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;4597<br>
+            &nbsp;&nbsp;]<br>
+          }<br>
+        </code>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
